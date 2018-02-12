@@ -1,0 +1,22 @@
+{
+  "name": "coverslide.me",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "pug src/index.pug -o build/",
+    "deploy": "aws s3 cp --recursive build/ s3://coverslide.me/ --acl public-read"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git-codecommit.us-west-2.amazonaws.com/v1/repos/coverslide.me"
+  },
+  "private": true,
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "node-sass-chokidar": "0.0.3",
+    "pug": "^2.0.0-rc.4",
+    "pug-cli": "^1.0.0-alpha6"
+  }
+}
