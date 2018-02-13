@@ -1,0 +1,78 @@
+<!DOCTYPE html><html><head><title>Richard's Page</title><meta name="viewport" content="initial-scale=1, maximum-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="shortcut icon" href="favicon.ico"><style>html {
+  background: black;
+  height: 100%;
+}
+body {
+  height: 100%;
+}
+#bg {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+#bg canvas {
+  width: 100%;
+  height: 100%;
+}
+#root {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+#root a {
+  display: inline-block;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  color: #ddd;
+  font-size: 30vw;
+  transform: rotateZ(0deg);
+  transition: transform 1s linear, color .3s linear;
+}
+#root a:hover {
+  color: white;
+  transform: rotateZ(360deg);
+}</style></head><body><div id="bg"></div><div id="root"><a id="github" href="https://github.com/coverslide" title="Github"><i class="fa fa-github"></i></a><a id="linkedin" href="https://www.linkedin.com/in/richardjhoffman" title="LinkedIn"><i class="fa fa-linkedin"></i></a><a id="resume" href="https://coverslide.me/resume.html" title="Resume"><i class="fa fa-file-text"></i></a></div></body><script>(function () {
+  // just a silly canvas draw, want to do something more fun with this
+  var global = {};
+  
+  function init () {
+    global.bg = document.getElementById('bg');
+    global.aspect = window.innerHeight / window.innerWidth;
+    global.canvas = document.createElement('canvas');
+    global.canvas.width = window.innerWidth;
+    global.canvas.height = window.innerHeight;
+    global.bg.appendChild(global.canvas);
+    global.lastTicks = 0;
+    global.x = 0;
+    global.y = 0;
+
+    window.addEventListener('mousemove', function (event) {
+      var context = global.canvas.getContext('2d');
+      global.x = event.pageX;
+      global.y = event.pageY;
+      context.arc(event.screenX, event.screenY, 20, 0, 2 * Math.PI)
+    });
+  }
+
+  function render (ticks) {
+    var delta = ticks - global.lastTicks;
+    global.lastTicks = ticks;
+    var context = global.canvas.getContext('2d');
+    context.fillStyle = 'rgba(255, 255, 255, .01)';
+    context.beginPath();
+    context.arc(global.x, global.y, 5, 0, 2 * Math.PI);
+    context.fill();
+    requestAnimationFrame(render);
+  }
+
+  init();
+  render(0);
+
+  window.onresize = function () {
+    global.canvas.width = window.innerWidth;
+    global.canvas.height = window.innerHeight; 
+  }
+})();</script></html>
