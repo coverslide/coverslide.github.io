@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pug src/index.pug -o build/",
+    "build": "pug src/index.pug -o build/ && cp -r public/* build/",
     "deploy": "aws s3 cp --recursive build/ s3://coverslide.me/ --acl public-read"
   },
   "repository": {
