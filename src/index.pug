@@ -58,6 +58,7 @@ html
     (function () {
       // just a silly canvas draw, want to do something more fun with this
       var global = {};
+      var point = { x: 0, y: 0, dx: 0, dy: 0, ddx: 0, ddy: 0 };
       
       function init () {
         global.bg = document.getElementById('bg');
@@ -69,6 +70,9 @@ html
         global.lastTicks = 0;
         global.x = 0;
         global.y = 0;
+
+        point.x = global.canvas.width / 2;
+        point.y = global.canvas.height / 2;
 
         window.addEventListener('mousemove', function (event) {
           var context = global.canvas.getContext('2d');
@@ -82,10 +86,24 @@ html
         var delta = ticks - global.lastTicks;
         global.lastTicks = ticks;
         var context = global.canvas.getContext('2d');
-        context.fillStyle = 'rgba(255, 255, 255, .01)';
+        context.strokeStyle = 'rgba(255, 255, 255, .05)';
+        context.lineCap = 'butt';
+        context.lineWidth = Math.abs(point.dx + point.dy) / 2;
         context.beginPath();
-        context.arc(global.x, global.y, 5, 0, 2 * Math.PI);
-        context.fill();
+        context.moveTo(point.x, point.y);
+        var damp = .5;
+        var tightness = 5;
+        //  F = -k(|x|-d)(x/|x|) - bv
+        var distx = (global.x - point.x) - point.dx;
+        var disty = (global.y - point.y) - point.dy;
+        point.ddx = (distx) / 20;
+        point.ddy = (disty) / 20;
+        point.dx += point.ddx;
+        point.dy += point.ddy ;
+        point.x += point.dx;
+        point.y += point.dy;
+        context.lineTo(point.x, point.y);
+        context.stroke();
         requestAnimationFrame(render);
       }
 
