@@ -71,8 +71,10 @@ html
         global.x = 0;
         global.y = 0;
 
-        point.x = global.canvas.width / 2;
-        point.y = global.canvas.height / 2;
+        global.x = global.canvas.width / 2;
+        global.y = global.canvas.height / 2;
+        point.x = global.x;
+        point.y = global.y;
 
         window.addEventListener('mousemove', function (event) {
           var context = global.canvas.getContext('2d');
