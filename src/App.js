@@ -4,7 +4,7 @@ const ALPHA_VALUE = .2;
 const SPRING_TIGHTNESS = .1;
 const MAX_SHIFT = 50;
 const SHIFT_DURATION = 60;
-const HISTORY_LENGTH = 1000;
+const HISTORY_LENGTH = 2000;
 
 export default class App {
   // just a silly canvas draw, want to do something more fun with this
