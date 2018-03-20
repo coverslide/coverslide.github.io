@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pug src/index.pug -o build/ && cp -r public/* build/",
+    "build": "npm run build-html && npm run build-public && npm run build-js",
+    "build-js": "webpack",
+    "build-html": "pug src/index.pug -o build/",
+    "build-public": "cp -r public/* build/",
     "deploy": "aws s3 cp --recursive build/ s3://coverslide.me/ --acl public-read"
   },
   "repository": {
@@ -15,8 +18,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
     "node-sass-chokidar": "0.0.3",
     "pug": "^2.0.0-rc.4",
-    "pug-cli": "^1.0.0-alpha6"
+    "pug-cli": "^1.0.0-alpha6",
+    "raf": "^3.4.0",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12"
   }
 }
