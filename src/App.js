@@ -2,8 +2,8 @@ import raf from 'raf';
 
 const ALPHA_VALUE = .2;
 const SPRING_TIGHTNESS = .1;
-const MAX_SHIFT = 50;
-const SHIFT_DURATION = 60;
+const MAX_SHIFT = 4;
+const SHIFT_DURATION = 2000;
 const HISTORY_LENGTH = 2000;
 
 export default class App {
@@ -12,8 +12,8 @@ export default class App {
   history = [];
   point = { x: 0, y: 0, dx: 0, dy: 0, ddx: 0, ddy: 0 };
   cursor = { x: 0, y: 0 };
-  color = this.randomColors();
-  colorShift = this.randomShifts();
+  hue = this.randomHue();
+  hueShift = this.randomShift();
   shiftLife = SHIFT_DURATION;
  
  constructor (window) {
@@ -60,7 +60,7 @@ export default class App {
   }
 
   render = (ticks) => {
-    const { canvas, color, colorShift, cursor, point } = this;
+    const { canvas, hue, hueShift, cursor, point } = this;
     const delta = ticks - this.lastTicks;
     this.lastTicks = ticks;
 
@@ -80,68 +80,45 @@ export default class App {
       return;
     }
 
-    this.drawLine(color, point);
-    this.history.push({ color: {...color}, point: {...point} });
+    this.drawLine(hue, point);
+    this.history.push({ hue: {...hue}, point: {...point} });
     this.history = this.history.slice(-HISTORY_LENGTH);
 
-    this.color = this.shiftColors(color, colorShift);
+    this.hue = this.shiftHue(hue, hueShift);
     this.shiftLife -= delta;
     if (this.shiftLife <= 0) {
+      console.log('sl', delta, this.hueShift);
       this.shiftLife = SHIFT_DURATION;
-      this.colorShift = this.randomShifts();
+      this.hueShift = this.randomShift();
     }
   }
 
   drawHistory () {
-    this.history.forEach(({ color, point }) => {
-      this.drawLine(color, point)
+    this.history.forEach(({ hue, point }) => {
+      this.drawLine(hue, point)
     })
   }
 
-  randomColors () {
-    return [
-      this.randomColor(),
-      this.randomColor(),
-      this.randomColor(),
-    ];
-  }
-
-  drawLine (color, point) {
+  drawLine (hue, point) {
     const { canvas } = this;
     const context = canvas.getContext('2d');
-    context.strokeStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${ALPHA_VALUE})`;
-    context.lineWidth = Math.abs(point.dx + point.dy) / 2;
+    context.strokeStyle = `hsla(${hue}, 100%, 50%, ${ALPHA_VALUE})`;
+    context.lineWidth = Math.max(1, Math.abs(point.dx + point.dy) / 2);
     context.beginPath();
     context.moveTo(point.x, point.y);
     context.lineTo(point.x - point.dx, point.y - point.dy);
     context.stroke();
   }
 
-  randomColor () {
-    return Math.round(Math.random() * 255);
-  }
-
-  randomShifts () {
-    return [
-      this.randomShift(),
-      this.randomShift(),
-      this.randomShift(),
-    ]
+  randomHue () {
+    return Math.round(Math.random() * 360);
   }
 
   randomShift () {
-    return Math.round(Math.random() * (MAX_SHIFT * 2) - MAX_SHIFT);
+    return Math.random() * (MAX_SHIFT * 2) - MAX_SHIFT;
   }
 
-  shiftColors (color, shifts) {
-    return [
-      this.shiftColor(color[0], shifts[0]),
-      this.shiftColor(color[1], shifts[1]),
-      this.shiftColor(color[2], shifts[2]),
-    ]
-  }
-
-  shiftColor (color, shift) {
-    return Math.max(0, Math.min(255, color + shift));
+  shiftHue (hue, shift) {
+    return hue + shift;
   }
 }
