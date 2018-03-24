@@ -4,7 +4,7 @@ const ALPHA_VALUE = .2;
 const SPRING_TIGHTNESS = .1;
 const MAX_SHIFT = 4;
 const SHIFT_DURATION = 2000;
-const HISTORY_LENGTH = 2000;
+const HISTORY_LENGTH = 5000;
 
 export default class App {
   // just a silly canvas draw, want to do something more fun with this
@@ -81,13 +81,12 @@ export default class App {
     }
 
     this.drawLine(hue, point);
-    this.history.push({ hue: {...hue}, point: {...point} });
+    this.history.push({ hue, point: {...point} });
     this.history = this.history.slice(-HISTORY_LENGTH);
 
     this.hue = this.shiftHue(hue, hueShift);
     this.shiftLife -= delta;
     if (this.shiftLife <= 0) {
-      console.log('sl', delta, this.hueShift);
       this.shiftLife = SHIFT_DURATION;
       this.hueShift = this.randomShift();
     }
