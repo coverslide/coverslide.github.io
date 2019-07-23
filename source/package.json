@@ -9,6 +9,7 @@
     "build-css": "postcss styles/index.scss -o build/style.css",
     "build-html": "pug views/index.pug -o build/",
     "build-public": "cp -r public/* build/",
+    "pages": "npm run build && cp -r build/* ../",
     "deploy": "aws s3 cp --recursive build/ s3://coverslide.me/ --acl public-read"
   },
   "repository": {
