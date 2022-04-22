@@ -35,11 +35,8 @@ body {
     padding-top: 3vw;
     padding-left: 1.5vw;
     padding-right: 1.5vw;
-    -webkit-transform: rotateZ(0deg);
-            transform: rotateZ(0deg);
-    transition: color 1s cubic-bezier(0.68, -0.55, 0.265, 1.55), text-shadow 1s cubic-bezier(0.68, -0.55, 0.265, 1.55), -webkit-transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform: rotateZ(0deg);
     transition: transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55), color 1s cubic-bezier(0.68, -0.55, 0.265, 1.55), text-shadow 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    transition: transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55), color 1s cubic-bezier(0.68, -0.55, 0.265, 1.55), text-shadow 1s cubic-bezier(0.68, -0.55, 0.265, 1.55), -webkit-transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     width: 30vw;
     height: 30vw;
     border-radius: 1000px;
@@ -50,7 +47,6 @@ body {
 
 #root a:hover {
       color: white;
-      -webkit-transform: rotateZ(360deg);
-              transform: rotateZ(360deg);
+      transform: rotateZ(360deg);
       text-shadow: #44f 0 0 50px; 
     }
