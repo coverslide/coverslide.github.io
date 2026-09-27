@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build-html && npm run build-css && npm run build-public && npm run build-js",
-    "build-js": "browserify src/index.js -o build/index.js",
+    "build-js": "esbuild src/index.js --bundle --format=iife --target=es2017 --outfile=build/index.js",
     "build-css": "postcss styles/index.scss -o build/style.css",
-    "build-html": "pug views/index.pug -o build/",
+    "build-html": "node scripts/build-html.js",
     "build-public": "cp -r public/* build/",
     "pages": "npm run build && cp -r build/* ../"
   },
@@ -15,34 +15,16 @@
     "type": "git",
     "url": "ssh://git-codecommit.us-west-2.amazonaws.com/v1/repos/coverslide.me"
   },
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-class-properties"
-    ]
-  },
   "private": true,
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
     "autoprefixer": "^10.4.4",
-    "babelify": "^10.0.0",
-    "browserify": "^17.0.0",
-    "postcss": "^8.4.12",
-    "postcss-cli": "^9.1.0",
-    "postcss-nested": "^5.0.6",
-    "pug": "^3.0.2",
-    "pug-cli": "^1.0.0-alpha6",
-    "raf": "^3.4.0"
+    "esbuild": "^0.28.2",
+    "postcss": "^8.5.28",
+    "postcss-cli": "^11.0.1",
+    "postcss-nested": "^7.0.2",
+    "pug": "^3.0.4",
+    "raf": "^3.4.1"
   }
 }
