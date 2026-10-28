@@ -41,9 +41,8 @@ body {
     height: 30vw;
     border-radius: 1000px;
     text-shadow: black 0 0;
+    /* border: 1px solid white */
   }
-
-/* border: 1px solid white */
 
 #root a:hover {
       color: white;
