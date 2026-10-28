@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build-html && npm run build-css && npm run build-public && npm run build-js",
+    "build": "npm run build-html && npm run build-css && npm run build-public && npm run build-js && npm run build-resume",
     "build-js": "esbuild src/index.js --bundle --format=iife --target=es2017 --outfile=build/index.js",
     "build-css": "postcss styles/index.scss -o build/style.css",
     "build-html": "node scripts/build-html.js",
+    "build-resume": "node scripts/build-resume.js",
+    "build-pdf": "node scripts/html-to-pdf.js ../resume.html ../resume.pdf",
     "build-public": "cp -r public/* build/",
     "pages": "npm run build && cp -r build/* ../"
   },
